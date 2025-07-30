@@ -32,13 +32,15 @@ const userSchema = new Schema<IUser>(
       type: String,
       enum: Object.values(DriverStatus),
       default: function () {
-        return this.role === Role.DRIVER ? DriverStatus.PENDING : undefined;
+        return (this as any).role === Role.DRIVER
+          ? DriverStatus.PENDING
+          : undefined;
       },
     },
     isOnline: {
       type: Boolean,
       default: function () {
-        return this.role === Role.DRIVER ? false : undefined;
+        return (this as any).role === Role.DRIVER ? false : undefined;
       },
     },
     vehicleInfo: vehicleInforSchema,
@@ -47,4 +49,4 @@ const userSchema = new Schema<IUser>(
   { timestamps: true, versionKey: false }
 );
 
-export const User = model<IUser>('User', userSchema);
+export const User = model<IUser>("User", userSchema);
