@@ -1,6 +1,6 @@
 import { Types } from "mongoose";
 
-export enum Role {
+export enum Roles {
   ADMIN = "admin",
   RIDER = "rider",
   DRIVER = "driver",
@@ -30,7 +30,7 @@ export interface IUser {
   email: string;
   password: string;
   phone: string;
-  role: Role;
+  role: Roles;
   status: UserStatus;
   driverStatus?: DriverStatus;
   isOnline?: boolean;
