@@ -62,7 +62,7 @@ const setOnlineStatus = async (
   // }
 
   const updateData: any = {
-    OnlineStatus: status,
+    onlineStatus: status,
   };
 
   if (status === OnlineStatus.ONLINE) {

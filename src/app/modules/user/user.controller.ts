@@ -45,6 +45,7 @@ const getMe = catchAsync(
     });
   }
 );
+
 const getSingleUser = catchAsync(
   async (req: Request, res: Response, next: NextFunction) => {
     const id = req.params.id;
