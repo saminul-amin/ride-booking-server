@@ -141,7 +141,7 @@ const getOnlineDrivers = async () => {
   return drivers;
 };
 
-const getDriverDahsboard = async (userId: string) => {
+const getDriverDashboard = async (userId: string) => {
   const driver = await Driver.findOne({ userId }).populate(
     "userId",
     "name email phone"
@@ -341,7 +341,7 @@ export const DriverServices = {
   getDriverProfile,
   getAllDrivers,
   getOnlineDrivers,
-  getDriverDahsboard,
+  getDriverDashboard,
   getDriverEarnings,
   addDriverEarning,
   getDriverStats,
