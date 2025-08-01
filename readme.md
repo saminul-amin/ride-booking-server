@@ -230,4 +230,4 @@ Check out the [5-10 minute demo video](link-to-your-video) showcasing:
 
 ---
 
-**⭐ If you found this project helpful, please give it a star on GitHub!**
+**⭐ If you find this project helpful, please give it a star on GitHub!**
