@@ -137,6 +137,7 @@ const forgotPassword = async (email: string) => {
 };
 
 export const AuthServices = {
+  credentialsLogin,
   getNewAccessToken,
   forgotPassword,
   setPassword,

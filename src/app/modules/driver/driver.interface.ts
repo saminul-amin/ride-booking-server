@@ -38,7 +38,7 @@ export interface IDriver {
     address?: string;
   };
   currentRiderId?: Types.ObjectId;
-  earnings: IDriverEarnings;
+  earnings: IDriverEarnings[];
   stats: IDriverStats;
   lastOnlineAt?: Date;
   lastOfflineAt?: Date;

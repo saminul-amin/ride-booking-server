@@ -11,32 +11,42 @@ import AppError from "../../errorHelpers/AppError";
 
 const credentialsLogin = catchAsync(
   async (req: Request, res: Response, next: NextFunction) => {
-    passport.authenticate("local", async (err: any, user: any, info: any) => {
-      if (err) {
-        return next(new AppError(401, err));
-      }
+    const loginInfo = await AuthServices.credentialsLogin(req.body);
 
-      if (!user) {
-        return next(new AppError(401, info.message));
-      }
+    setAuthCookie(res, loginInfo);
 
-      const userTokens = await createUserTokens(user);
+    sendResponse(res, {
+      success: true,
+      statusCode: httpStatus.OK,
+      message: "User logged in successfully",
+      data: loginInfo,
+    });
+    // passport.authenticate("local", async (err: any, user: any, info: any) => {
+    //   if (err) {
+    //     return next(new AppError(401, err));
+    //   }
 
-      const { password: pass, ...rest } = user.toObject();
+    //   if (!user) {
+    //     return next(new AppError(401, info.message));
+    //   }
 
-      setAuthCookie(res, userTokens);
+    //   const userTokens = await createUserTokens(user);
 
-      sendResponse(res, {
-        success: true,
-        statusCode: httpStatus.OK,
-        message: "User Logged In Successfully",
-        data: {
-          accessToken: userTokens.accessToken,
-          refreshToken: userTokens.refreshToken,
-          user: rest,
-        },
-      });
-    })(req, res, next);
+    //   const { password: pass, ...rest } = user.toObject();
+
+    //   setAuthCookie(res, userTokens);
+
+    //   sendResponse(res, {
+    //     success: true,
+    //     statusCode: httpStatus.OK,
+    //     message: "User Logged In Successfully",
+    //     data: {
+    //       accessToken: userTokens.accessToken,
+    //       refreshToken: userTokens.refreshToken,
+    //       user: rest,
+    //     },
+    //   });
+    // })(req, res, next);
   }
 );
 
