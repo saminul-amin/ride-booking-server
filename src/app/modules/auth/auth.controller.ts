@@ -7,6 +7,7 @@ import { AuthServices } from "./auth.service";
 import passport from "passport";
 import { createUserTokens } from "../../utils/userTokens";
 import { setAuthCookie } from "../../utils/setCookie";
+import AppError from "../../errorHelpers/AppError";
 
 const credentialsLogin = catchAsync(
   async (req: Request, res: Response, next: NextFunction) => {

@@ -3,7 +3,7 @@ import {
   DriverStatus,
   IUser,
   IVehicleInfo,
-  Role,
+  Roles,
   UserStatus,
 } from "./user.interface";
 
@@ -26,13 +26,13 @@ const userSchema = new Schema<IUser>(
     email: { type: String, required: true, unique: true, lowercase: true },
     password: { type: String, required: true, minlength: 6 },
     phone: { type: String, required: true },
-    role: { type: String, enum: Object.values(Role) },
+    role: { type: String, enum: Object.values(Roles) },
     status: { type: String, enum: Object.values(UserStatus) },
     driverStatus: {
       type: String,
       enum: Object.values(DriverStatus),
       default: function () {
-        return (this as any).role === Role.DRIVER
+        return (this as any).role === Roles.DRIVER
           ? DriverStatus.PENDING
           : undefined;
       },
@@ -40,7 +40,7 @@ const userSchema = new Schema<IUser>(
     isOnline: {
       type: Boolean,
       default: function () {
-        return (this as any).role === Role.DRIVER ? false : undefined;
+        return (this as any).role === Roles.DRIVER ? false : undefined;
       },
     },
     vehicleInfo: vehicleInforSchema,

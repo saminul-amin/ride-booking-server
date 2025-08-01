@@ -4,6 +4,7 @@ import { envVars } from "../config/env";
 import { JwtPayload } from "jsonwebtoken";
 import { User } from "../modules/user/user.model";
 import httpStatus from "http-status-codes";
+import AppError from "../errorHelpers/AppError";
 
 export const checkAuth =
   (...authRoles: string[]) =>
