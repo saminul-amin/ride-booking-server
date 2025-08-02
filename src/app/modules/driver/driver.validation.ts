@@ -115,9 +115,3 @@ export const driverStatsZodSchema = z
     }
   );
 
-export const createDriverProfileZodSchema = z.object({
-  userId: z
-    .string({ message: "User ID must be a string" })
-    .regex(/^[0-9a-fA-F]{24}$/, { message: "Invalid user ID format" }),
-  currentLocation: locationSchema.optional(),
-});

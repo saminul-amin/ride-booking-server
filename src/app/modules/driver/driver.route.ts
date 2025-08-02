@@ -4,7 +4,6 @@ import { Roles } from "../user/user.interface";
 import { DriverControllers } from "./driver.controller";
 import { validateRequest } from "../../middlewares/validateRequest";
 import {
-  createDriverProfileZodSchema,
   driverEarningsZodSchema,
   driverStatsZodSchema,
   setOnlineStatusZodSchema,
@@ -16,7 +15,6 @@ const router = Router();
 router.post(
   "/profile",
   checkAuth(Roles.DRIVER),
-  validateRequest(createDriverProfileZodSchema),
   DriverControllers.createDriverProfile
 );
 router.get(
