@@ -4,8 +4,6 @@ import { Roles } from "../user/user.interface";
 import { DriverControllers } from "./driver.controller";
 import { validateRequest } from "../../middlewares/validateRequest";
 import {
-  driverEarningsZodSchema,
-  driverStatsZodSchema,
   setOnlineStatusZodSchema,
   updateLocationZodSchema,
 } from "./driver.validation";
@@ -42,7 +40,6 @@ router.get(
 router.get(
   "/earnings",
   checkAuth(Roles.DRIVER),
-  validateRequest(driverEarningsZodSchema),
   DriverControllers.getDriverEarnings
 );
 router.get("/stats", checkAuth(Roles.DRIVER), DriverControllers.getDriverStats);
@@ -64,7 +61,6 @@ router.post(
 router.patch(
   "/:id/stats",
   checkAuth(Roles.ADMIN),
-  validateRequest(driverStatsZodSchema),
   DriverControllers.updateDriverStats
 );
 router.delete(

@@ -4,7 +4,6 @@ import { Roles } from "../user/user.interface";
 import { RideControllers } from "./ride.controller";
 import { validateRequest } from "../../middlewares/validateRequest";
 import {
-  cancelRideZodSchema,
   createRideZodSchema,
   rateRideZodSchema,
   updateRideStatusZodSchema,
@@ -21,7 +20,6 @@ router.post(
 router.patch(
   "/:id/cancel",
   checkAuth(Roles.DRIVER, Roles.RIDER),
-  validateRequest(cancelRideZodSchema),
   RideControllers.cancelRide
 );
 router.post(

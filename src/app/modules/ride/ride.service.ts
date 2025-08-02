@@ -220,9 +220,11 @@ const cancelRide = async (
       cancelledBy,
       cancellationReason,
       $push: {
-        statusHistory: RideStatus.CANCELLED,
-        timestamp: new Date(),
-        updatedBy: cancelledBy,
+        statusHistory: {
+          status: RideStatus.CANCELLED,
+          timestamp: new Date(),
+          updatedBy: cancelledBy,
+        },
       },
     },
     { new: true }

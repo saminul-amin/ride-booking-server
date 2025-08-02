@@ -203,7 +203,7 @@ This ride booking system implements a complete backend solution with JWT-based a
 
 ## Demo Video
 
-Check out the [5-10 minute demo video](link-to-your-video) showcasing:
+Check out the [walkthrough video](https://drive.google.com/file/d/1JdyTaMhwYH7ZA1o-Xo4w3f87xk1b7Azz/view?usp=sharing) showcasing:
 - Project overview and architecture
 - Authentication and authorization flow
 - Complete ride booking journey

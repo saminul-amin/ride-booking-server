@@ -46,16 +46,6 @@ export const updateRideStatusZodSchema = z.object({
   }),
 });
 
-export const cancelRideZodSchema = z.object({
-  cancellationReason: z
-    .string({ message: "Cancellation reason must be a string" })
-    .min(3, {
-      message: "Cancellation reason must be at least 3 characters long",
-    })
-    .max(500, { message: "Cancellation reason cannot exceed 500 characters" })
-    .trim(),
-});
-
 export const rateRideZodSchema = z.object({
   rating: z
     .number({ message: "Rating must be a number" })
