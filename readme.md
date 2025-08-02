@@ -47,25 +47,7 @@ This ride booking system implements a complete backend solution with JWT-based a
    npm i
    ```
 
-3. **Environment Configuration**
-   Create a `.env` file in the root directory:
-   ```env
-   # Server Configuration
-   PORT=5000
-   NODE_ENV=development
-   
-   # Database Configuration
-   MONGODB_URI=mongodb://localhost:27017/ride-booking-db
-   
-   # JWT Configuration
-   JWT_SECRET=your-super-secret-jwt-key
-   JWT_EXPIRES_IN=7d
-   
-   # Other Configuration
-   BCRYPT_SALT_ROUNDS=12
-   ```
-
-4. **Run the application**
+3. **Run the application**
    ```bash
    # Development mode
    npm run dev
