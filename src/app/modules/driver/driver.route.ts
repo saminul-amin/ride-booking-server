@@ -2,12 +2,21 @@ import { Router } from "express";
 import { checkAuth } from "../../middlewares/checkAuth";
 import { Roles } from "../user/user.interface";
 import { DriverControllers } from "./driver.controller";
+import { validateRequest } from "../../middlewares/validateRequest";
+import {
+  createDriverProfileZodSchema,
+  driverEarningsZodSchema,
+  driverStatsZodSchema,
+  setOnlineStatusZodSchema,
+  updateLocationZodSchema,
+} from "./driver.validation";
 
 const router = Router();
 
 router.post(
   "/profile",
   checkAuth(Roles.DRIVER),
+  validateRequest(createDriverProfileZodSchema),
   DriverControllers.createDriverProfile
 );
 router.get(
@@ -18,11 +27,13 @@ router.get(
 router.patch(
   "/status",
   checkAuth(Roles.DRIVER),
+  validateRequest(setOnlineStatusZodSchema),
   DriverControllers.setOnlineStatus
 );
 router.patch(
   "/location",
   checkAuth(Roles.DRIVER),
+  validateRequest(updateLocationZodSchema),
   DriverControllers.updateLocation
 );
 router.get(
@@ -33,6 +44,7 @@ router.get(
 router.get(
   "/earnings",
   checkAuth(Roles.DRIVER),
+  validateRequest(driverEarningsZodSchema),
   DriverControllers.getDriverEarnings
 );
 router.get("/stats", checkAuth(Roles.DRIVER), DriverControllers.getDriverStats);
@@ -54,6 +66,7 @@ router.post(
 router.patch(
   "/:id/stats",
   checkAuth(Roles.ADMIN),
+  validateRequest(driverStatsZodSchema),
   DriverControllers.updateDriverStats
 );
 router.delete(

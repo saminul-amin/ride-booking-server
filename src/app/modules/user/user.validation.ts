@@ -1,7 +1,6 @@
 import z from "zod";
 import { Roles } from "./user.interface";
 
-// Create user validation schema
 export const createUserZodSchema = z.object({
   name: z
     .string({ message: "Name must be string" })
