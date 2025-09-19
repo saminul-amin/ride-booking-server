@@ -35,7 +35,7 @@ export const createNewAccessTokenWithRefreshToken = async (
 ) => {
   const verifiedRefreshToken = verifyToken(
     refreshToken,
-    envVars.JWT_ACCESS_SECRET
+    envVars.JWT_REFRESH_SECRET
   ) as JwtPayload;
 
   const isUserExist = await User.findOne({ email: verifiedRefreshToken.email });

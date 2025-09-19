@@ -23,7 +23,7 @@ router.get(
 router.patch(
   "/status",
   checkAuth(Roles.DRIVER),
-  validateRequest(setOnlineStatusZodSchema),
+  // validateRequest(setOnlineStatusZodSchema),
   DriverControllers.setOnlineStatus
 );
 router.patch(

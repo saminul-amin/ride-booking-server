@@ -30,6 +30,8 @@ const requestRide = async (payload: Partial<IRide>) => {
     },
   });
 
+  console.log("Active Ride:", activeRide);
+
   if (activeRide) {
     throw new AppError(
       httpStatus.BAD_REQUEST,
@@ -51,6 +53,8 @@ const requestRide = async (payload: Partial<IRide>) => {
       },
     ],
   });
+
+  console.log("New Ride Created:", ride);
 
   return ride;
 };

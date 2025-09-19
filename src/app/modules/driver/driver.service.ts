@@ -42,6 +42,8 @@ const createDriverProfile = async (userId: string) => {
     },
   });
 
+  // console.log("Driver Profile Created:", driver);
+
   return driver;
 };
 
@@ -49,23 +51,31 @@ const setOnlineStatus = async (
   userId: string,
   payload: ISetOnlineStatusRequest
 ) => {
-  const { status, location } = payload;
+  const { status: onlineStatus, location } = payload;
+
+  // console.log("Payload:", payload);
+  // console.log("Payload.status:", payloonlineStatus);
+  // console.log("Status:", onlineStatus);
+  // console.log("UserID:", userId);
 
   const driver = await Driver.findOne({ userId });
+
+  if (driver === null) {
+    const something = await createDriverProfile(userId);
+    // console.log("Something:", something);
+  }
+  // console.log("Driver:", driver);
   if (!driver) {
     throw new AppError(httpStatus.NOT_FOUND, "Driver profile not found");
   }
 
-  const user = await User.findById(userId);
-  // if(user?.isBlocked) {
-  //     throw new AppError(httpStatus.FORBIDDEN, "Driver Account is Blocked")
-  // }
-
   const updateData: any = {
-    onlineStatus: status,
+    onlineStatus: onlineStatus,
   };
 
-  if (status === OnlineStatus.ONLINE) {
+  console.log("Update Data (Before Location Check):", updateData);
+
+  if (onlineStatus === OnlineStatus.ONLINE) {
     updateData.lastOnlineAt = new Date();
     if (location) {
       updateData.currentLocation = location;
@@ -80,9 +90,11 @@ const setOnlineStatus = async (
     }
   }
 
+  console.log("Update Data: (After Location Check)", updateData);
+
   const updatedDriver = await Driver.findOneAndUpdate({ userId }, updateData, {
     new: true,
-  }).populate("userId", "name email phoen");
+  }).populate("userId", "name email phone");
 
   return updatedDriver;
 };
@@ -326,7 +338,8 @@ const updateDriverStats = async (
 };
 
 const deleteDriverProfile = async (userId: string) => {
-  const driver = await Driver.findOneAndDelete({ userId });
+  const driver = await Driver.findOneAndDelete({ _id: userId });
+  console.log("Driver to be deleted:", driver);
   if (!driver) {
     throw new AppError(httpStatus.NOT_FOUND, "Driver profile not found");
   }

@@ -27,7 +27,7 @@ export const setOnlineStatusZodSchema = z
   })
   .refine(
     (data) => {
-      if (data.status === OnlineStatus.ONLINE && !data.location) {
+      if (data.status === OnlineStatus.ONLINE) {
         return false;
       }
       return true;

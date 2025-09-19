@@ -26,6 +26,9 @@ const setOnlineStatus = catchAsync(
   async (req: Request, res: Response, next: NextFunction) => {
     const decodedToken = req.user as JwtPayload;
 
+    console.log("Decoded Token:", decodedToken);
+    console.log("Request Body:", req.body);
+
     const result = await DriverServices.setOnlineStatus(
       decodedToken.userId,
       req.body
@@ -191,6 +194,8 @@ const updateDriverStats = catchAsync(
 const deleteDriverProfile = catchAsync(
   async (req: Request, res: Response, next: NextFunction) => {
     const driverUserId = req.params.id;
+
+    console.log("Driver User ID to delete:", driverUserId);
 
     const result = await DriverServices.deleteDriverProfile(driverUserId);
 

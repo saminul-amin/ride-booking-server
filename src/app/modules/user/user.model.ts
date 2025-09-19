@@ -33,7 +33,7 @@ const userSchema = new Schema<IUser>(
       enum: Object.values(DriverStatus),
       default: function () {
         return (this as any).role === Roles.DRIVER
-          ? DriverStatus.PENDING
+          ? DriverStatus.APPROVED
           : undefined;
       },
     },

@@ -13,7 +13,11 @@ const requestRide = catchAsync(
       riderId: decodedToken.userId,
     };
 
+    // console.log("Payload:", payload);
+
     const result = await RideServices.requestRide(payload);
+
+    console.log("Result:", result);
 
     sendResponse(res, {
       success: true,
@@ -28,6 +32,8 @@ const acceptRide = catchAsync(
   async (req: Request, res: Response, next: NextFunction) => {
     const decodedToken = req.user as JwtPayload;
     const rideId = req.params.id;
+
+    console.log("Ride ID:", rideId);
 
     const result = await RideServices.acceptRide(rideId, decodedToken.userId);
 
