@@ -22,7 +22,7 @@ app.use(
   cors({
     origin: [
       "http://localhost:5173",
-      "https://ride-booking-frontend-pfsdapx39-saminulamin-gmailcoms-projects.vercel.app",
+      "https://ride-booking-frontend-gamma.vercel.app",
     ],
     credentials: true,
   })
