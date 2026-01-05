@@ -61,6 +61,24 @@ const updateLocation = catchAsync(
   }
 );
 
+const updateDriverProfile = catchAsync(
+  async (req: Request, res: Response, next: NextFunction) => {
+    const decodedToken = req.user as JwtPayload;
+
+    const result = await DriverServices.updateDriverProfile(
+      decodedToken.userId,
+      req.body
+    );
+
+    sendResponse(res, {
+      success: true,
+      statusCode: httpStatus.OK,
+      message: "Driver profile updated successfully",
+      data: result,
+    });
+  }
+);
+
 const getDriverProfile = catchAsync(
   async (req: Request, res: Response, next: NextFunction) => {
     const decodedToken = req.user as JwtPayload;
@@ -210,6 +228,7 @@ const deleteDriverProfile = catchAsync(
 
 export const DriverControllers = {
   createDriverProfile,
+  updateDriverProfile,
   setOnlineStatus,
   updateLocation,
   getDriverProfile,

@@ -17,10 +17,12 @@ const locationSchema = z.object({
     .max(180, { message: "Longitude must be between -180 and 180" }),
 });
 
-export const createRideZodSchema = z
+export const requestRideZodSchema = z
   .object({
     pickupLocation: locationSchema,
     destinationLocation: locationSchema,
+    paymentMethod: z.enum(["cash", "card", "wallet"]),
+    fare: z.number().optional(),
   })
   .refine(
     (data) => {

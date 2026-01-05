@@ -4,7 +4,7 @@ import { Roles } from "../user/user.interface";
 import { RideControllers } from "./ride.controller";
 import { validateRequest } from "../../middlewares/validateRequest";
 import {
-  createRideZodSchema,
+  requestRideZodSchema,
   rateRideZodSchema,
   updateRideStatusZodSchema,
 } from "./ride.validation";
@@ -14,8 +14,14 @@ const router = Router();
 router.post(
   "/request",
   checkAuth(Roles.RIDER),
-  validateRequest(createRideZodSchema),
+  validateRequest(requestRideZodSchema),
   RideControllers.requestRide
+);
+
+router.post(
+  "/estimate-fare",
+  checkAuth(Roles.RIDER),
+  RideControllers.estimateFare
 );
 router.patch(
   "/:id/cancel",
@@ -46,10 +52,15 @@ router.get(
 );
 router.get(
   "/history",
-  checkAuth(Roles.RIDER, Roles.DRIVER),
+  checkAuth(Roles.RIDER, Roles.DRIVER, Roles.ADMIN),
   RideControllers.getRideHistory
 );
 router.get("/all-rides", checkAuth(Roles.ADMIN), RideControllers.getAllRides);
+router.get(
+    "/admin/analytics",
+    checkAuth(Roles.ADMIN),
+    RideControllers.getAdminAnalytics
+);
 router.get(
   "/:id",
   checkAuth(Roles.ADMIN, Roles.DRIVER, Roles.RIDER),

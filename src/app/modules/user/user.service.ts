@@ -27,9 +27,40 @@ const createUser = async (payload: Partial<IUser>) => {
   return user;
 };
 
-const getAllUsers = async () => {
-  const users = await User.find().select("-password").lean();
-  return users;
+const getAllUsers = async (query: any) => {
+  const { page = 1, limit = 10, searchTerm, role, status } = query;
+  const skip = (Number(page) - 1) * Number(limit);
+
+  const filter: any = {};
+
+  if (role) filter.role = role;
+  if (status) filter.status = status;
+
+  if (searchTerm) {
+      filter.$or = [
+          { name: { $regex: searchTerm, $options: "i" } },
+          { email: { $regex: searchTerm, $options: "i" } },
+          { phone: { $regex: searchTerm, $options: "i" } }
+      ];
+  }
+
+  const users = await User.find(filter)
+    .select("-password")
+    .skip(skip)
+    .limit(Number(limit))
+    .sort({ createdAt: -1 });
+
+  const total = await User.countDocuments(filter);
+
+  return {
+      users,
+      meta: {
+          page: Number(page),
+          limit: Number(limit),
+          total,
+          totalPage: Math.ceil(total / Number(limit))
+      }
+  };
 };
 
 const getSingleUser = async (id: string) => {
@@ -41,9 +72,35 @@ const getSingleUser = async (id: string) => {
 
 const getMe = async (userId: string) => {
   const user = await User.findById(userId).select("-password");
+  if (!user) {
+    throw new AppError(httpStatus.NOT_FOUND, "User profile not found");
+  }
   return {
     data: user,
   };
+};
+
+const updateProfile = async (userId: string, payload: Partial<IUser>) => {
+  const user = await User.findById(userId);
+  if (!user) {
+    throw new AppError(httpStatus.NOT_FOUND, "User not found");
+  }
+
+  const updatedUser = await User.findByIdAndUpdate(userId, payload, {
+    new: true,
+  }).select("-password");
+
+  return {
+    data: updatedUser,
+  };
+};
+
+const updateUserStatus = async (userId: string, status: string) => {
+    const user = await User.findById(userId);
+    if (!user) throw new AppError(httpStatus.NOT_FOUND, "User not found");
+
+    const updatedUser = await User.findByIdAndUpdate(userId, { status }, { new: true }).select("-password");
+    return updatedUser;
 };
 
 export const UserServices = {
@@ -51,4 +108,6 @@ export const UserServices = {
   getAllUsers,
   getSingleUser,
   getMe,
+  updateProfile,
+  updateUserStatus
 };

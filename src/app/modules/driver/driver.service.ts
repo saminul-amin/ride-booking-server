@@ -58,11 +58,10 @@ const setOnlineStatus = async (
   // console.log("Status:", onlineStatus);
   // console.log("UserID:", userId);
 
-  const driver = await Driver.findOne({ userId });
+  let driver = await Driver.findOne({ userId });
 
-  if (driver === null) {
-    const something = await createDriverProfile(userId);
-    // console.log("Something:", something);
+  if (!driver) {
+    driver = await createDriverProfile(userId);
   }
   // console.log("Driver:", driver);
   if (!driver) {
@@ -122,6 +121,20 @@ const updateLocation = async (
   ).populate("userId", "name email phone");
 
   return updatedDriver;
+};
+
+const updateDriverProfile = async (userId: string, payload: Partial<IDriver>) => {
+  const driver = await Driver.findOneAndUpdate(
+    { userId },
+    payload,
+    { new: true }
+  ).populate("userId", "name email phone");
+
+  if (!driver) {
+    throw new AppError(httpStatus.NOT_FOUND, "Driver profile not found");
+  }
+
+  return driver;
 };
 
 const getDriverProfile = async (userId: string) => {
@@ -349,6 +362,7 @@ const deleteDriverProfile = async (userId: string) => {
 
 export const DriverServices = {
   createDriverProfile,
+  updateDriverProfile,
   setOnlineStatus,
   updateLocation,
   getDriverProfile,

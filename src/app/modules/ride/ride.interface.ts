@@ -9,6 +9,12 @@ export enum RideStatus {
   CANCELLED = "cancelled",
 }
 
+export enum PaymentMethod {
+  CASH = "cash",
+  CARD = "card",
+  WALLET = "wallet",
+}
+
 export interface ILocation {
   address: string;
   latitude: number;
@@ -38,6 +44,7 @@ export interface IRide {
   cancelledBy?: Types.ObjectId;
   cancellationReason?: string;
   fare?: number;
+  paymentMethod: PaymentMethod;
   distance?: number;
   duration?: number;
   rating?: number;

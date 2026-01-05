@@ -91,10 +91,12 @@ const cancelRide = catchAsync(
 const getRideHistory = catchAsync(
   async (req: Request, res: Response, next: NextFunction) => {
     const decodedToken = req.user as JwtPayload;
+    console.log("History Query:", req.query);
 
     const result = await RideServices.getRideHistory(
       decodedToken.userId,
-      decodedToken.role
+      decodedToken.role,
+      req.query
     );
 
     sendResponse(res, {
@@ -169,6 +171,33 @@ const rateRide = catchAsync(
   }
 );
 
+const estimateFare = catchAsync(
+  async (req: Request, res: Response, next: NextFunction) => {
+    const { pickup, destination } = req.body;
+
+    const result = await RideServices.estimateFare(pickup, destination);
+
+    sendResponse(res, {
+      success: true,
+      statusCode: httpStatus.OK,
+      message: "Fare estimated successfully",
+      data: result,
+    });
+  }
+);
+
+const getAdminAnalytics = catchAsync(
+  async (req: Request, res: Response, next: NextFunction) => {
+    const result = await RideServices.getAdminAnalytics();
+    sendResponse(res, {
+        success: true,
+        statusCode: httpStatus.OK,
+        message: "Admin analytics retrieved successfully",
+        data: result,
+    });
+  }
+);
+
 export const RideControllers = {
   requestRide,
   acceptRide,
@@ -179,4 +208,6 @@ export const RideControllers = {
   getSingleRide,
   getAvailableRides,
   rateRide,
+  estimateFare,
+  getAdminAnalytics
 };

@@ -53,6 +53,13 @@ const driverSchema = new Schema<IDriver>(
       default: OnlineStatus.OFFLINE,
     },
     currentLocation: currentLocationSchema,
+    vehicle: {
+        make: { type: String },
+        model: { type: String },
+        year: { type: Number },
+        licensePlate: { type: String },
+        color: { type: String },
+    },
     currentRiderId: { type: Schema.Types.ObjectId, ref: "Ride" },
     earnings: [driverEarningSchema],
     stats: { type: driverStatsSchema, default: () => ({}) },

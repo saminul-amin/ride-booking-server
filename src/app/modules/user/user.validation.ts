@@ -35,3 +35,20 @@ export const createUserZodSchema = z.object({
     message: "Role must be admin, rider, or driver",
   }),
 });
+
+export const updateProfileZodSchema = z.object({
+  name: z
+    .string({ message: "Name must be string" })
+    .min(2, { message: "Name must be at least 2 characters long." })
+    .max(50, { message: "Name cannot exceed 50 characters." })
+    .trim()
+    .optional(),
+  phone: z
+    .string({ message: "Phone number must be string" })
+    .regex(/^(?:\+8801\d{9}|01\d{9})$/, {
+      message:
+        "Phone number must be valid for Bangladesh. Format: +8801XXXXXXXXX or 01XXXXXXXXX",
+    })
+    .optional(),
+  address: z.string({ message: "Address must be string" }).optional(),
+});

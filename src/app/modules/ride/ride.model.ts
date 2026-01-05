@@ -1,5 +1,5 @@
 import { model, Schema } from "mongoose";
-import { ILocation, IRide, IStatusHistory, RideStatus } from "./ride.interface";
+import { ILocation, IRide, IStatusHistory, PaymentMethod, RideStatus } from "./ride.interface";
 
 const locationSchema = new Schema<ILocation>({
   address: { type: String, required: true },
@@ -37,6 +37,12 @@ const rideSchema = new Schema<IRide>(
     cancelledBy: { type: Schema.Types.ObjectId, ref: "User" },
     cancellationReason: { type: String },
     fare: { type: Number },
+    paymentMethod: {
+      type: String,
+      enum: Object.values(PaymentMethod),
+      default: PaymentMethod.CASH,
+      required: true,
+    },
     distance: { type: Number },
     duration: { type: Number },
     rating: { type: Number, min: 1, max: 5 },

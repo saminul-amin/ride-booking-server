@@ -26,6 +26,7 @@ const userSchema = new Schema<IUser>(
     email: { type: String, required: true, unique: true, lowercase: true },
     password: { type: String, required: true, minlength: 6 },
     phone: { type: String, required: true },
+    address: { type: String },
     role: { type: String, enum: Object.values(Roles) },
     status: { type: String, enum: Object.values(UserStatus) },
     driverStatus: {

@@ -30,6 +30,7 @@ export interface IUser {
   email: string;
   password: string;
   phone: string;
+  address?: string;
   role: Roles;
   status: UserStatus;
   driverStatus?: DriverStatus;

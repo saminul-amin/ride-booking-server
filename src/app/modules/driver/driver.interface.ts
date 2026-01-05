@@ -37,6 +37,13 @@ export interface IDriver {
     longitude: number;
     address?: string;
   };
+  vehicle?: {
+    make: string;
+    model: string;
+    year: number;
+    licensePlate: string;
+    color: string;
+  };
   currentRiderId?: Types.ObjectId;
   earnings: IDriverEarnings[];
   stats: IDriverStats;

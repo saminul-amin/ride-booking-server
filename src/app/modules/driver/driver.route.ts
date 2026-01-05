@@ -21,6 +21,11 @@ router.get(
   DriverControllers.getDriverProfile
 );
 router.patch(
+  "/profile",
+  checkAuth(Roles.DRIVER),
+  DriverControllers.updateDriverProfile
+);
+router.patch(
   "/status",
   checkAuth(Roles.DRIVER),
   // validateRequest(setOnlineStatusZodSchema),
